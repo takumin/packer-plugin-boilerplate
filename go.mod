@@ -2,7 +2,13 @@ module github.com/takumin/packer-plugin-boilerplate
 
 go 1.19
 
-require github.com/hashicorp/packer-plugin-sdk v0.3.2
+require (
+	github.com/hashicorp/hcl/v2 v2.14.1
+	github.com/hashicorp/packer-plugin-sdk v0.3.2
+
+	// https://github.com/hashicorp/packer-plugin-sdk/issues/128#issuecomment-1235716326
+	github.com/zclconf/go-cty v1.10.0
+)
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
@@ -15,6 +21,7 @@ require (
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/consul/api v1.15.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -35,7 +42,6 @@ require (
 	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/hashicorp/hcl/v2 v2.14.1 // indirect
 	github.com/hashicorp/serf v0.10.1 // indirect
 	github.com/hashicorp/vault/api v1.8.0 // indirect
 	github.com/hashicorp/vault/sdk v0.6.0 // indirect
@@ -54,12 +60,13 @@ require (
 	github.com/oklog/run v1.1.0 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
+	github.com/stretchr/testify v1.8.0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
-	github.com/zclconf/go-cty v1.11.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	golang.org/x/crypto v0.0.0-20221005025214-4161e89ecf1b // indirect
 	golang.org/x/net v0.0.0-20221004154528-8021a29435af // indirect
+	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
 	golang.org/x/sys v0.0.0-20221006211917-84dc82d7e875 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220922220347-f3bd1da661af // indirect

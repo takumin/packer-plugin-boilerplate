@@ -68,6 +68,10 @@ install: build
 	mkdir -p $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)
 	cp bin/$(APPNAME) $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)/$(PLUGIN_NAME)
 
+.PHONY: check
+check: install
+	cd bin && packer-sdc plugin-check $(APPNAME)
+
 .PHONY: init
 init: install
 	packer init example
