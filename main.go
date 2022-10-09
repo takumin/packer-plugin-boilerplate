@@ -6,12 +6,13 @@ import (
 
 	"github.com/hashicorp/packer-plugin-sdk/plugin"
 
+	"github.com/takumin/packer-plugin-boilerplate/builder/example"
 	"github.com/takumin/packer-plugin-boilerplate/version"
 )
 
 func main() {
 	pps := plugin.NewSet()
-	// pps.RegisterBuilder(plugin.DEFAULT_NAME, new(builder.Builder))
+	pps.RegisterBuilder(plugin.DEFAULT_NAME, new(example.Builder))
 	// pps.RegisterProvisioner(plugin.DEFAULT_NAME, new(provisioner.Provisioner))
 	// pps.RegisterPostProcessor(plugin.DEFAULT_NAME, new(post_processor.PostProcessor))
 	// pps.RegisterDatasource(plugin.DEFAULT_NAME, new(datasource.Datasource))
