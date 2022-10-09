@@ -1,4 +1,5 @@
 APPNAME  := $(shell basename $(CURDIR))
+PKGNAME  := $(shell go mod edit -json | jq -r '.Module.Path')
 VERSION  := $(shell git describe --abbrev=0 --tags 2>/dev/null)
 REVISION := $(shell git rev-parse HEAD 2>/dev/null)
 
@@ -16,8 +17,8 @@ LDFLAGS_REVISION := -X "main.Revision=$(REVISION)"
 LDFLAGS          := -s -w -buildid= $(LDFLAGS_APPNAME) $(LDFLAGS_VERSION) $(LDFLAGS_REVISION) -extldflags -static
 BUILDFLAGS       := -trimpath -ldflags '$(LDFLAGS)'
 
-PKGNAME := $(shell go mod edit -json | jq -r '.Module.Path' | sed -E 's/packer-plugin-//')
-BINNAME := $(APPNAME)_$(VERSION)_$(shell go env GOOS)_$(shell go env GOARCH)
+PLUGIN_PATH := $(shell echo "$(PKGNAME)" | sed -E 's/packer-plugin-//')
+PLUGIN_NAME := $(APPNAME)_$(VERSION)_$(shell go env GOOS)_$(shell go env GOARCH)
 
 .PHONY: all
 all: clean tools generate fmt vet sec vuln lint test build
@@ -65,8 +66,8 @@ describe: build
 
 .PHONY: install
 install: build
-	mkdir -p $(HOME)/.packer.d/plugins/$(PKGNAME)
-	cp bin/$(APPNAME) $(HOME)/.packer.d/plugins/$(PKGNAME)/$(BINNAME)
+	mkdir -p $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)
+	cp bin/$(APPNAME) $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)/$(PLUGIN_NAME)
 
 .PHONY: snapshot
 snapshot:
@@ -82,4 +83,4 @@ endif
 clean:
 	rm -rf bin
 	rm -rf dist
-	rm -rf $(HOME)/.packer.d/plugins/$(PKGNAME)
+	rm -rf $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)
