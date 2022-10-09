@@ -15,18 +15,20 @@ builds:
   flags:
   - -trimpath
   ldflags:
-  - -s -w
-  - -X main.AppName={{ .ProjectName }}
-  - -X main.Version={{ .Version }}
-  - -X main.Revision={{ .FullCommit }}
+  - -s -w -buildid=
+  - -X {{ .ModulePath }}/version.Version={{ .Version }}
+  - -X {{ .ModulePath }}/version.Revision={{ .FullCommit }}
+  - -X {{ .ModulePath }}/version.VersionPrerelease=
   - -extldflags -static
+  mod_timestamp: '{{ .CommitTimestamp }}'
+  binary: '{{ .ProjectName }}_v{{ .Version }}_{{ .Env.API_VERSION }}_{{ .Os }}_{{ .Arch }}'
 archives:
-- name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-  format_overrides:
-  - goos: windows
-    format: zip
+- name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Env.API_VERSION }}_{{ .Os }}_{{ .Arch }}'
+  format: zip
 checksum:
-  name_template: "{{ .ProjectName }}_sha256sums.txt"
+  name_template: '{{ .ProjectName }}_v{{ .Version }}_SHA256SUMS'
   algorithm: sha256
 release:
   prerelease: auto
+changelog:
+  skip: true

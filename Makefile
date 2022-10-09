@@ -69,13 +69,13 @@ install: build
 	cp bin/$(APPNAME) $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)/$(PLUGIN_NAME)
 
 .PHONY: snapshot
-snapshot:
-	goreleaser release --rm-dist --snapshot
+snapshot: build
+	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --rm-dist --snapshot
 
 .PHONY: release
-release:
+release: build
 ifneq ($(GITHUB_TOKEN),)
-	goreleaser release --rm-dist
+	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --rm-dist
 endif
 
 .PHONY: clean
