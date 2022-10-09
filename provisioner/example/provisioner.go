@@ -6,14 +6,15 @@ import (
 	"context"
 
 	"github.com/hashicorp/hcl/v2/hcldec"
+	"github.com/hashicorp/packer-plugin-sdk/common"
 	"github.com/hashicorp/packer-plugin-sdk/packer"
 	"github.com/hashicorp/packer-plugin-sdk/template/config"
 	"github.com/hashicorp/packer-plugin-sdk/template/interpolate"
 )
 
 type Config struct {
-	MockOption string `mapstructure:"mock"`
-	ctx        interpolate.Context
+	common.PackerConfig `mapstructure:",squash"`
+	ctx                 interpolate.Context
 }
 
 type Provisioner struct {
@@ -39,6 +40,6 @@ func (p *Provisioner) Prepare(raws ...interface{}) error {
 	return nil
 }
 
-func (p *Provisioner) Provision(_ context.Context, ui packer.Ui, _ packer.Communicator, generatedData map[string]interface{}) error {
+func (p *Provisioner) Provision(ctx context.Context, ui packer.Ui, com packer.Communicator, generatedData map[string]interface{}) error {
 	return nil
 }
