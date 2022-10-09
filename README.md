@@ -1,4 +1,4 @@
-# boilerplate-golang-cli
-Boilerplate Golang CLI Tool
+# packer-plugin-boilerplate
+Boilerplate Packer Plugin
 
-[![CI](https://github.com/takumin/boilerplate-golang-cli/actions/workflows/integration.yml/badge.svg)](https://github.com/takumin/boilerplate-golang-cli/actions/workflows/integration.yml)
+[![CI](https://github.com/takumin/packer-plugin-boilerplate/actions/workflows/integration.yml/badge.svg)](https://github.com/takumin/packer-plugin-boilerplate/actions/workflows/integration.yml)
