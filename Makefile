@@ -68,6 +68,10 @@ install: build
 	mkdir -p $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)
 	cp bin/$(APPNAME) $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)/$(PLUGIN_NAME)
 
+.PHONY: init
+init: install
+	packer init example
+
 .PHONY: snapshot
 snapshot: build
 	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --rm-dist --snapshot
