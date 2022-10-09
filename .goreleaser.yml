@@ -1,0 +1,32 @@
+before:
+  hooks:
+  - go mod download
+  - go mod tidy
+builds:
+- env:
+  - CGO_ENABLED=0
+  goos:
+  - darwin
+  - linux
+  - windows
+  goarch:
+  - amd64
+  - arm64
+  flags:
+  - -trimpath
+  ldflags:
+  - -s -w
+  - -X main.AppName={{ .ProjectName }}
+  - -X main.Version={{ .Version }}
+  - -X main.Revision={{ .FullCommit }}
+  - -extldflags -static
+archives:
+- name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  format_overrides:
+  - goos: windows
+    format: zip
+checksum:
+  name_template: "{{ .ProjectName }}_sha256sums.txt"
+  algorithm: sha256
+release:
+  prerelease: auto

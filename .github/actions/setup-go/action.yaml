@@ -1,0 +1,74 @@
+inputs:
+  go-mod:
+    description: go.mod file path
+    required: false
+    default: go.mod
+  go-sum:
+    description: go.sum file path
+    required: false
+    default: go.sum
+  cache:
+    description: actions cache enabled
+    required: false
+    default: true
+  cache-key:
+    description: actions cache key
+    required: false
+    default: min
+  check-latest:
+    description: check latest version
+    required: false
+    default: false
+runs:
+  using: composite
+  steps:
+  ################################################################################
+  # Setup Go
+  ################################################################################
+  - name: Setup Go
+    uses: actions/setup-go@v3
+    with:
+      go-version-file: ${{ inputs.go-mod }}
+      check-latest: ${{ inputs.check-latest }}
+  ################################################################################
+  # Go Env
+  ################################################################################
+  - name: Go Env
+    if: ${{ inputs.cache == 'true' }}
+    id: goenv
+    shell: bash
+    run: |
+      echo "::set-output name=GOCACHE::$(go env GOCACHE)"
+      echo "::set-output name=GOMODCACHE::$(go env GOMODCACHE)"
+  ################################################################################
+  # Cache Key
+  ################################################################################
+  - name: Cache Key
+    if: ${{ inputs.cache == 'true' }}
+    id: cache-key
+    shell: bash
+    run: echo "::set-output name=name::${{ runner.os }}-go-${{ inputs.cache-key }}"
+  ################################################################################
+  # Go Build Cache
+  ################################################################################
+  - name: Go Build Cache
+    if: ${{ inputs.cache == 'true' }}
+    uses: actions/cache@v3
+    with:
+      path: ${{ steps.goenv.outputs.GOCACHE }}
+      key: ${{ steps.cache-key.outputs.name }}-build-${{ hashFiles(inputs.go-sum) }}-${{ hashFiles('**/actions-cache-version') }}
+      restore-keys: |
+        ${{ steps.cache-key.outputs.name }}-build-${{ hashFiles(inputs.go-sum) }}-
+        ${{ steps.cache-key.outputs.name }}-build-
+  ################################################################################
+  # Go Mod Cache
+  ################################################################################
+  - name: Go Mod Cache
+    if: ${{ inputs.cache == 'true' }}
+    uses: actions/cache@v3
+    with:
+      path: ${{ steps.goenv.outputs.GOMODCACHE }}
+      key: ${{ steps.cache-key.outputs.name }}-mod-${{ hashFiles(inputs.go-sum) }}-${{ hashFiles('**/actions-cache-version') }}
+      restore-keys: |
+        ${{ steps.cache-key.outputs.name }}-mod-${{ hashFiles(inputs.go-sum) }}-
+        ${{ steps.cache-key.outputs.name }}-mod-

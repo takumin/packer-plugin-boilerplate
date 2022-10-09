@@ -1,0 +1,20 @@
+runs:
+  using: composite
+  steps:
+  - name: Cache Directory
+    id: cache-dir
+    shell: bash
+    run: echo "::set-output name=aqua::${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}"
+  - name: Aqua Tools Cache
+    uses: actions/cache@v3
+    with:
+      path: ${{ steps.cache-dir.outputs.aqua }}
+      key: ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}-${{ hashFiles('**/actions-cache-version') }}
+      restore-keys: |
+        ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}-
+        ${{ runner.os }}-aqua-tools-
+  - name: Setup Aqua
+    uses: aquaproj/aqua-installer@v1.1.2
+    with:
+      aqua_version: v1.19.5
+      aqua_opts: -a

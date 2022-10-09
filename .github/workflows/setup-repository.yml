@@ -1,0 +1,40 @@
+name: Setup Repository
+on:
+  push:
+    branches:
+    - 'main'
+permissions:
+  contents: write
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ !startsWith(github.repository, 'takumin/packer-plugin-boilerplate') }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.19
+    - name: Setup Tools
+      run: go install github.com/sirkon/go-imports-rename@latest
+    - name: Setup Repository
+      run: ./scripts/setup-repository.bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Cleanup Boilerplate
+      run: |
+        rm .github/workflows/setup-repository.yml
+        rm scripts/setup-repository.bash
+    - name: Reinitialize Repository
+      shell: bash
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git add .
+        git commit -m 'Reinitialize commit'
+        git push

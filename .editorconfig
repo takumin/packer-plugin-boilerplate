@@ -1,0 +1,25 @@
+root = true
+
+[*]
+charset                  = utf-8
+end_of_line              = lf
+indent_style             = space
+indent_size              = 2
+insert_final_newline     = true
+trim_trailing_whitespace = true
+
+[*.{sh,bash}]
+indent_style       = tab
+switch_case_indent = true
+space_redirects    = true
+binary_next_line   = true
+function_next_line = true
+
+[*.go]
+indent_style = tab
+
+[{Makefile,makefile}]
+indent_style = tab
+
+[go.{mod,work}]
+indent_style = tab

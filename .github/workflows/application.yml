@@ -1,0 +1,86 @@
+name: Application
+on:
+  workflow_call:
+  pull_request:
+    paths:
+    # Build
+    - 'Makefile'
+    - '.aqua.yaml'
+    # GoReleaser
+    - '.goreleaser.yml'
+    # GitHub Actions
+    - '.github/actions/setup-go/action.yaml'
+    - '.github/actions/setup-aqua/action.yaml'
+    - '.github/dependency/actions-cache-version'
+    - '.github/workflows/application.yml'
+    # Go
+    - '**.go'
+    - 'go.mod'
+    - 'go.sum'
+permissions:
+  contents: write
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+    ################################################################################
+    # Checkout
+    ################################################################################
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: ${{ startsWith(github.ref, 'refs/tags/') && '0' || '1' }}
+    ################################################################################
+    # Setup Go
+    ################################################################################
+    - name: Setup Go
+      uses: ./.github/actions/setup-go
+      with:
+        cache: true
+        cache-key: ci
+        check-latest: true
+    ################################################################################
+    # Setup Aqua
+    ################################################################################
+    - name: Setup Aqua
+      uses: ./.github/actions/setup-aqua
+    ################################################################################
+    # Go
+    ################################################################################
+    - name: Go Mod Download
+      run: go mod download
+    - name: Go Mod Tidy
+      run: go mod tidy
+    - name: Go Tools
+      run: make tools
+    - name: Go Generate
+      run: make generate
+    - name: Go Vet
+      run: make vet
+    - name: Go Lint
+      run: make lint
+    - name: Go Sec
+      run: make sec
+    - name: Go Test
+      run: make test
+    - name: Go Build
+      run: make build
+    ################################################################################
+    # GoReleaser
+    ################################################################################
+    - name: GoReleaser (${{ startsWith(github.ref, 'refs/tags/') && 'Release' || 'Snapshot' }})
+      run: make ${{ startsWith(github.ref, 'refs/tags/') && 'release' || 'snapshot' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    ################################################################################
+    # Artifact
+    ################################################################################
+    - name: Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Artifacts
+        path: |
+          dist/*.tar.gz
+          dist/*.zip
+          dist/*.txt

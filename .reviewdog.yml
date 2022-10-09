@@ -1,0 +1,30 @@
+runner:
+  shfmt:
+    cmd: shfmt -d .
+    format: diff
+  shellcheck:
+    cmd: shellcheck -f checkstyle $(find '.' -type f -a \( -name '*.sh' -o -name '*.bash' \) -print)
+    format: checkstyle
+  yamllint:
+    cmd: yamllint --format parsable .
+    errorformat:
+    - '%f:%l:%c: %m'
+  gjson-validate:
+    cmd: gjson validate .
+    format: rdjsonl
+  actionlint:
+    cmd: actionlint -oneline
+    errorformat:
+    - '%f:%l:%c: %m'
+  gofmt:
+    cmd: gofmt -d .
+    format: diff
+  govet:
+    cmd: go vet ./...
+    format: govet
+  gosec:
+    cmd: gosec -quiet -fmt golint ./...
+    format: gosec
+  staticcheck:
+    cmd: staticcheck ./...
+    format: staticcheck

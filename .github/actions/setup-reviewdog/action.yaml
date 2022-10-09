@@ -1,0 +1,30 @@
+outputs:
+  running:
+    description: 'Reviewdog Running Status'
+    value: ${{ steps.running.outputs.status }}
+  reporter:
+    description: 'Reviewdog Reporter Type'
+    value: ${{ steps.reporter.outputs.type }}
+runs:
+  using: composite
+  steps:
+  - name: Reviewdog Running Status
+    id: running
+    shell: bash
+    run: |
+      case "${{ github.event_name }}" in
+      "push" )                echo "::set-output name=status::true" ;;
+      "pull_request" )        echo "::set-output name=status::true" ;;
+      "pull_request_target" ) echo "::set-output name=status::true" ;;
+      * )                     echo "::set-output name=status::false" ;;
+      esac
+  - name: Reviewdog Reporter Type
+    id: reporter
+    shell: bash
+    run: |
+      case "${{ github.event_name }}" in
+      "push" )                echo "::set-output name=type::github-check" ;;
+      "pull_request" )        echo "::set-output name=type::github-pr-review" ;;
+      "pull_request_target" ) echo "::set-output name=type::github-pr-review" ;;
+      * )                     echo "::set-output name=type::local" ;;
+      esac

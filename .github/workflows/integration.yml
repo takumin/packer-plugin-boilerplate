@@ -1,0 +1,42 @@
+name: CI
+on:
+  push:
+    branches:
+    - 'main'
+    tags:
+    - 'v*'
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
+jobs:
+  application:
+    name: Application
+    uses: ./.github/workflows/application.yml
+  reviewdog-actionlint:
+    name: Reviewdog (actionlint)
+    uses: ./.github/workflows/reviewdog-actionlint.yml
+  reviewdog-gjson-validate:
+    name: Reviewdog (gjson-validate)
+    uses: ./.github/workflows/reviewdog-gjson-validate.yml
+  reviewdog-gofmt:
+    name: Reviewdog (gofmt)
+    uses: ./.github/workflows/reviewdog-gofmt.yml
+  reviewdog-gosec:
+    name: Reviewdog (gosec)
+    uses: ./.github/workflows/reviewdog-gosec.yml
+  reviewdog-govet:
+    name: Reviewdog (govet)
+    uses: ./.github/workflows/reviewdog-govet.yml
+  reviewdog-shellcheck:
+    name: Reviewdog (shellcheck)
+    uses: ./.github/workflows/reviewdog-shellcheck.yml
+  reviewdog-shfmt:
+    name: Reviewdog (shfmt)
+    uses: ./.github/workflows/reviewdog-shfmt.yml
+  reviewdog-staticcheck:
+    name: Reviewdog (staticcheck)
+    uses: ./.github/workflows/reviewdog-staticcheck.yml
+  reviewdog-yamllint:
+    name: Reviewdog (yamllint)
+    uses: ./.github/workflows/reviewdog-yamllint.yml

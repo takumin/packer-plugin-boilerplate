@@ -1,0 +1,12 @@
+runs:
+  using: composite
+  steps:
+  - name: Setup Python
+    uses: actions/setup-python@v4
+    with:
+      python-version-file: .github/dependency/.python-version
+      cache: pip
+      cache-dependency-path: .github/dependency/requirements.txt
+  - name: Setup Pip
+    shell: bash
+    run: pip install -r .github/dependency/requirements.txt
