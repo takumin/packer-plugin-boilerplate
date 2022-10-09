@@ -20,3 +20,7 @@ var (
 	// Revision is the main branch commit hash that is being run at the moment.
 	Revision = "unknown"
 )
+
+func init() {
+	version.GitCommit = Revision
+}

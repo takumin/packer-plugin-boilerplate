@@ -4,17 +4,16 @@ VERSION  := $(shell git describe --abbrev=0 --tags 2>/dev/null)
 REVISION := $(shell git rev-parse HEAD 2>/dev/null)
 
 ifeq ($(VERSION),)
-VERSION := dev
+VERSION := 0.0.1
 endif
 
 ifeq ($(REVISION),)
 REVISION := unknown
 endif
 
-LDFLAGS_APPNAME  := -X "main.AppName=$(APPNAME)"
-LDFLAGS_VERSION  := -X "main.Version=$(VERSION)"
-LDFLAGS_REVISION := -X "main.Revision=$(REVISION)"
-LDFLAGS          := -s -w -buildid= $(LDFLAGS_APPNAME) $(LDFLAGS_VERSION) $(LDFLAGS_REVISION) -extldflags -static
+LDFLAGS_VERSION  := -X "$(PKGNAME)/version.Version=$(VERSION)"
+LDFLAGS_REVISION := -X "$(PKGNAME)/version.Revision=$(REVISION)"
+LDFLAGS          := -s -w -buildid= $(LDFLAGS_VERSION) $(LDFLAGS_REVISION) -extldflags -static
 BUILDFLAGS       := -trimpath -ldflags '$(LDFLAGS)'
 
 PLUGIN_PATH := $(shell echo "$(PKGNAME)" | sed -E 's/packer-plugin-//')
