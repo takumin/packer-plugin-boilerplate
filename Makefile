@@ -28,6 +28,7 @@ tools:
 
 .PHONY: generate
 generate:
+	go install github.com/hashicorp/packer-plugin-sdk/cmd/packer-sdc@latest
 	go generate ./...
 
 .PHONY: fmt
