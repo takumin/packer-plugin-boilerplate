@@ -36,16 +36,26 @@ func (b *Builder) Prepare(raws ...interface{}) (generatedVars []string, warnings
 	if err != nil {
 		return nil, nil, err
 	}
+
 	return []string{}, nil, nil
 }
 
 func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (packer.Artifact, error) {
 	steps := []multistep.Step{}
+	steps = append(steps,
+		new(commonsteps.StepProvision),
+	)
+
 	state := new(multistep.BasicStateBag)
+	state.Put("hook", hook)
+	state.Put("ui", ui)
+
 	b.runner = commonsteps.NewRunner(steps, b.config.PackerConfig, ui)
 	b.runner.Run(ctx, state)
+
 	if err, ok := state.GetOk("error"); ok {
 		return nil, err.(error)
 	}
+
 	return &Artifact{}, nil
 }
