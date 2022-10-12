@@ -1,23 +1,16 @@
-//go:generate packer-sdc mapstructure-to-hcl2 -type Config
-
 package example
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/hcl/v2/hcldec"
-	"github.com/hashicorp/packer-plugin-sdk/common"
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
 	"github.com/hashicorp/packer-plugin-sdk/multistep/commonsteps"
 	"github.com/hashicorp/packer-plugin-sdk/packer"
-	"github.com/hashicorp/packer-plugin-sdk/template/config"
 )
 
 const BuilderId = "example.builder"
-
-type Config struct {
-	common.PackerConfig `mapstructure:",squash"`
-}
 
 type Builder struct {
 	config Config
@@ -29,32 +22,35 @@ func (b *Builder) ConfigSpec() hcldec.ObjectSpec {
 }
 
 func (b *Builder) Prepare(raws ...interface{}) (generatedVars []string, warnings []string, err error) {
-	err = config.Decode(&b.config, &config.DecodeOpts{
-		PluginType:  "packer.builder.example",
-		Interpolate: true,
-	}, raws...)
+	warnings, err = b.config.Prepare(raws...)
 	if err != nil {
-		return nil, nil, err
+		return nil, warnings, err
 	}
-
-	return []string{}, nil, nil
+	return nil, warnings, nil
 }
 
 func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (packer.Artifact, error) {
-	steps := []multistep.Step{}
-	steps = append(steps,
+	steps := []multistep.Step{
 		new(commonsteps.StepProvision),
-	)
+	}
 
 	state := new(multistep.BasicStateBag)
 	state.Put("hook", hook)
 	state.Put("ui", ui)
 
-	b.runner = commonsteps.NewRunner(steps, b.config.PackerConfig, ui)
+	b.runner = commonsteps.NewRunnerWithPauseFn(steps, b.config.PackerConfig, ui, state)
 	b.runner.Run(ctx, state)
 
 	if err, ok := state.GetOk("error"); ok {
 		return nil, err.(error)
+	}
+
+	if _, ok := state.GetOk(multistep.StateCancelled); ok {
+		return nil, errors.New("build was cancelled")
+	}
+
+	if _, ok := state.GetOk(multistep.StateHalted); ok {
+		return nil, errors.New("build was halted")
 	}
 
 	return &Artifact{}, nil
