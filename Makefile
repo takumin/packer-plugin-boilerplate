@@ -17,8 +17,9 @@ LDFLAGS          := -s -w -buildid= $(LDFLAGS_VERSION) $(LDFLAGS_REVISION) -extl
 BUILDFLAGS       := -trimpath -ldflags '$(LDFLAGS)'
 
 API_VERSION := x5.0
-PLUGIN_PATH := $(shell echo "$(PKGNAME)" | sed -E 's/packer-plugin-//')
+PLUGIN_REPO := $(shell echo "$(PKGNAME)" | sed -E 's/packer-plugin-//')
 PLUGIN_NAME := $(APPNAME)_$(VERSION)_$(API_VERSION)_$(shell go env GOOS)_$(shell go env GOARCH)
+PLUGIN_PATH := $(HOME)/.packer.d/plugins/$(PLUGIN_REPO)
 
 .PHONY: all
 all: clean tools generate fmt vet sec vuln lint test build
@@ -65,10 +66,11 @@ describe: build
 	bin/$(APPNAME) describe
 
 .PHONY: install
-install: build
-	mkdir -p $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)
-	cp bin/$(APPNAME) $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)/$(PLUGIN_NAME)
-	cd bin && sha256sum $(APPNAME) > $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)/$(PLUGIN_NAME)_SHA256SUM
+install: $(PLUGIN_PATH)/$(PLUGIN_NAME)
+$(PLUGIN_PATH)/$(PLUGIN_NAME): bin/$(APPNAME)
+	mkdir -p $(PLUGIN_PATH)
+	cp bin/$(APPNAME) $(PLUGIN_PATH)/$(PLUGIN_NAME)
+	cd bin && sha256sum $(APPNAME) > $(PLUGIN_PATH)/$(PLUGIN_NAME)_SHA256SUM
 
 .PHONY: check
 check: install
@@ -93,4 +95,4 @@ endif
 clean:
 	rm -rf bin
 	rm -rf dist
-	rm -rf $(HOME)/.packer.d/plugins/$(PLUGIN_PATH)
+	rm -rf $(PLUGIN_PATH)
