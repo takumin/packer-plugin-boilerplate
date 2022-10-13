@@ -74,9 +74,10 @@ install: build
 check: install
 	cd bin && packer-sdc plugin-check $(APPNAME)
 
-.PHONY: init
-init: install
+.PHONY: run
+run: check
 	packer init example
+	packer build example
 
 .PHONY: snapshot
 snapshot: build
