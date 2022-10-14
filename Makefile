@@ -2,6 +2,7 @@ APPNAME  := $(shell basename $(CURDIR))
 PKGNAME  := $(shell go mod edit -json | jq -r '.Module.Path')
 VERSION  := $(shell git describe --abbrev=0 --tags 2>/dev/null)
 REVISION := $(shell git rev-parse HEAD 2>/dev/null)
+SOURCES  := $(shell find . -type f -name '*.go')
 
 ifeq ($(VERSION),)
 VERSION := 0.0.1
@@ -58,7 +59,7 @@ test:
 
 .PHONY: build
 build: bin/$(APPNAME)
-bin/$(APPNAME): $(SRCS)
+bin/$(APPNAME): $(SOURCES)
 	CGO_ENABLED=0 go build $(BUILDFLAGS) -o $@
 
 .PHONY: describe
