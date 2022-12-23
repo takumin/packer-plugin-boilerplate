@@ -14,7 +14,7 @@ runs:
         ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}-
         ${{ runner.os }}-aqua-tools-
   - name: Setup Aqua
-    uses: aquaproj/aqua-installer@v1.1.2
+    uses: aquaproj/aqua-installer@v1.2.0
     with:
       aqua_version: v1.25.0
       aqua_opts: -a
