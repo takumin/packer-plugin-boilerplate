@@ -6,3 +6,10 @@ packer {
     }
   }
 }
+
+source "boilerplate" "example" {
+}
+
+build {
+  sources = ["source.boilerplate.example"]
+}
