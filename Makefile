@@ -47,7 +47,7 @@ sec:
 
 .PHONY: vuln
 vuln:
-	trivy fs -q -s HIGH,CRITICAL --security-checks vuln,config,secret,license .
+	trivy fs -q -s HIGH,CRITICAL --scanners vuln,config,secret,license .
 
 .PHONY: lint
 lint:
