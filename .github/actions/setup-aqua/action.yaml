@@ -16,5 +16,5 @@ runs:
   - name: Setup Aqua
     uses: aquaproj/aqua-installer@v2.1.1
     with:
-      aqua_version: v2.4.1
+      aqua_version: v2.4.2
       aqua_opts: -a
