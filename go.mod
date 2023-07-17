@@ -7,7 +7,7 @@ require (
 	github.com/hashicorp/packer-plugin-sdk v0.4.0
 
 	// https://github.com/hashicorp/packer-plugin-sdk/issues/128#issuecomment-1235716326
-	github.com/zclconf/go-cty v1.10.0
+	github.com/zclconf/go-cty v1.13.2
 )
 
 require (
