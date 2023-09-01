@@ -14,6 +14,6 @@ packages:
 - name: koalaman/shellcheck@v0.9.0
 - name: rhysd/actionlint@v1.6.25
 - name: takumin/gjson@v0.0.2
-- name: aquasecurity/trivy@v0.44.1
+- name: aquasecurity/trivy@v0.45.0
 - name: x-motemen/gobump@v0.2.0
 - name: hashicorp/packer-plugin-sdk/packer-sdc@v0.5.1
