@@ -6,7 +6,7 @@ registries:
   ref: v4.48.0 # renovate: depName=aquaproj/aqua-registry
 
 packages:
-- name: dominikh/go-tools/staticcheck@2023.1.5
+- name: dominikh/go-tools/staticcheck@2023.1.6
 - name: goreleaser/goreleaser@v1.20.0
 - name: securego/gosec@v2.17.0
 - name: reviewdog/reviewdog@v0.15.0
