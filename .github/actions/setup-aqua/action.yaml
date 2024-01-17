@@ -6,7 +6,7 @@ runs:
     shell: bash
     run: echo "::set-output name=aqua::${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}"
   - name: Aqua Tools Cache
-    uses: actions/cache@v3
+    uses: actions/cache@v4
     with:
       path: ${{ steps.cache-dir.outputs.aqua }}
       key: ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}-${{ hashFiles('**/actions-cache-version') }}

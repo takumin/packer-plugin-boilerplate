@@ -53,7 +53,7 @@ runs:
   ################################################################################
   - name: Go Build Cache
     if: ${{ inputs.cache == 'true' }}
-    uses: actions/cache@v3
+    uses: actions/cache@v4
     with:
       path: ${{ steps.goenv.outputs.GOCACHE }}
       key: ${{ steps.cache-key.outputs.name }}-build-${{ hashFiles(inputs.go-sum) }}-${{ hashFiles('**/actions-cache-version') }}
@@ -65,7 +65,7 @@ runs:
   ################################################################################
   - name: Go Mod Cache
     if: ${{ inputs.cache == 'true' }}
-    uses: actions/cache@v3
+    uses: actions/cache@v4
     with:
       path: ${{ steps.goenv.outputs.GOMODCACHE }}
       key: ${{ steps.cache-key.outputs.name }}-mod-${{ hashFiles(inputs.go-sum) }}-${{ hashFiles('**/actions-cache-version') }}
