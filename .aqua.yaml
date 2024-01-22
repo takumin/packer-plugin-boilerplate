@@ -9,7 +9,7 @@ packages:
 - name: dominikh/go-tools/staticcheck@2023.1.6
 - name: goreleaser/goreleaser@v1.23.0
 - name: securego/gosec@v2.18.2
-- name: reviewdog/reviewdog@v0.16.0
+- name: reviewdog/reviewdog@v0.17.0
 - name: mvdan/sh@v3.7.0
 - name: koalaman/shellcheck@v0.9.0
 - name: rhysd/actionlint@v1.6.26
