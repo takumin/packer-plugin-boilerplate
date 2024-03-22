@@ -13,18 +13,18 @@ runs:
     shell: bash
     run: |
       case "${{ github.event_name }}" in
-      "push" )                echo "::set-output name=status::true" ;;
-      "pull_request" )        echo "::set-output name=status::true" ;;
-      "pull_request_target" ) echo "::set-output name=status::true" ;;
-      * )                     echo "::set-output name=status::false" ;;
+      "push" )                echo "status=true" >> $GITHUB_OUTPUT ;;
+      "pull_request" )        echo "status=true" >> $GITHUB_OUTPUT ;;
+      "pull_request_target" ) echo "status=true" >> $GITHUB_OUTPUT ;;
+      * )                     echo "status=false" >> $GITHUB_OUTPUT ;;
       esac
   - name: Reviewdog Reporter Type
     id: reporter
     shell: bash
     run: |
       case "${{ github.event_name }}" in
-      "push" )                echo "::set-output name=type::github-check" ;;
-      "pull_request" )        echo "::set-output name=type::github-pr-review" ;;
-      "pull_request_target" ) echo "::set-output name=type::github-pr-review" ;;
-      * )                     echo "::set-output name=type::local" ;;
+      "push" )                echo "type=github-check" >> $GITHUB_OUTPUT ;;
+      "pull_request" )        echo "type=github-pr-review" >> $GITHUB_OUTPUT ;;
+      "pull_request_target" ) echo "type=github-pr-review" >> $GITHUB_OUTPUT ;;
+      * )                     echo "type=local" >> $GITHUB_OUTPUT ;;
       esac
