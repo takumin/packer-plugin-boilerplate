@@ -27,9 +27,6 @@ jobs:
       uses: actions/checkout@v4
     - name: Setup Go
       uses: ./.github/actions/setup-go
-      with:
-        cache: true
-        cache-key: vet
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
     - name: Setup Reviewdog
