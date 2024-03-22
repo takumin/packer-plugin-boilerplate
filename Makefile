@@ -84,12 +84,12 @@ run: check
 
 .PHONY: snapshot
 snapshot: build
-	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --rm-dist --snapshot
+	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --clean --snapshot
 
 .PHONY: release
 release: build
 ifneq ($(GITHUB_TOKEN),)
-	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --rm-dist
+	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --clean
 endif
 
 .PHONY: clean
