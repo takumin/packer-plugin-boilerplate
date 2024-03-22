@@ -5,12 +5,11 @@ runner:
   shellcheck:
     cmd: shellcheck -f checkstyle $(find '.' -type f -a \( -name '*.sh' -o -name '*.bash' \) -print)
     format: checkstyle
-  yamllint:
-    cmd: yamllint --format parsable .
-    errorformat:
-    - '%f:%l:%c: %m'
   gjson-validate:
     cmd: gjson validate .
+    format: rdjsonl
+  gyaml-validate:
+    cmd: gyaml validate .
     format: rdjsonl
   actionlint:
     cmd: actionlint -oneline

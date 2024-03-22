@@ -1,19 +1,14 @@
-name: Reviewdog (yamllint)
+name: Reviewdog (gyaml-validate)
 on:
   workflow_call:
   pull_request:
     paths:
     - '.github/actions/setup-go/action.yaml'
     - '.github/actions/setup-aqua/action.yaml'
-    - '.github/actions/setup-python/action.yaml'
     - '.github/actions/setup-reviewdog/action.yaml'
-    - '.github/dependency/.python-version'
-    - '.github/dependency/requirements.txt'
-    - '.github/dependency/actions-cache-version'
-    - '.github/workflows/reviewdog-yamllint.yml'
+    - '.github/workflows/reviewdog-gyaml-validate.yml'
     - '.aqua.yaml'
     - '.reviewdog.yml'
-    - '.yamllint'
     - '**.yml'
     - '**.yaml'
 permissions:
@@ -32,12 +27,10 @@ jobs:
       uses: ./.github/actions/setup-go
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
-    - name: Setup Python
-      uses: ./.github/actions/setup-python
     - name: Setup Reviewdog
       id: reviewdog
       uses: ./.github/actions/setup-reviewdog
     - name: Reviewdog
-      run: reviewdog -runners 'yamllint' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
+      run: reviewdog -runners 'gyaml-validate' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

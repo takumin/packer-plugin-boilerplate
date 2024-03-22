@@ -19,6 +19,9 @@ jobs:
   reviewdog-gjson-validate:
     name: Reviewdog (gjson-validate)
     uses: ./.github/workflows/reviewdog-gjson-validate.yml
+  reviewdog-gyaml-validate:
+    name: Reviewdog (gyaml-validate)
+    uses: ./.github/workflows/reviewdog-gyaml-validate.yml
   reviewdog-gofmt:
     name: Reviewdog (gofmt)
     uses: ./.github/workflows/reviewdog-gofmt.yml
@@ -37,6 +40,3 @@ jobs:
   reviewdog-staticcheck:
     name: Reviewdog (staticcheck)
     uses: ./.github/workflows/reviewdog-staticcheck.yml
-  reviewdog-yamllint:
-    name: Reviewdog (yamllint)
-    uses: ./.github/workflows/reviewdog-yamllint.yml
