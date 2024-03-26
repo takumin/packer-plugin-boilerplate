@@ -3,7 +3,7 @@ module github.com/takumin/packer-plugin-boilerplate
 go 1.22.1
 
 require (
-	github.com/hashicorp/hcl/v2 v2.20.0
+	github.com/hashicorp/hcl/v2 v2.20.1
 	github.com/hashicorp/packer-plugin-sdk v0.5.2
 
 	// https://github.com/hashicorp/packer-plugin-sdk/issues/128#issuecomment-1235716326
