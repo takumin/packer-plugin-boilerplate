@@ -15,7 +15,7 @@ var (
 
 	// PluginVersion is used by the plugin set to allow Packer to recognize
 	// what version this plugin is.
-	PluginVersion = version.InitializePluginVersion(Version, VersionPrerelease)
+	PluginVersion = version.NewPluginVersion(Version, VersionPrerelease, "")
 
 	// Revision is the main branch commit hash that is being run at the moment.
 	Revision = "unknown"
