@@ -1,3 +1,5 @@
+name: Setup Aqua
+description: Setup Aqua by using cache and environment variables
 runs:
   using: composite
   steps:
