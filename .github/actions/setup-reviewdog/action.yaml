@@ -1,3 +1,5 @@
+name: Setup Reviewdog
+description: Setup Reviewdog by settings runnning status and reporter type
 outputs:
   running:
     description: 'Reviewdog Running Status'

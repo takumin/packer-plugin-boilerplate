@@ -1,3 +1,5 @@
+name: Setup Go
+description: Setup Go by reconfigure input values
 inputs:
   go-mod:
     description: go.mod file path
