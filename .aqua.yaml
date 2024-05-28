@@ -11,7 +11,7 @@ packages:
 - name: reviewdog/reviewdog@v0.17.4
 - name: mvdan/sh@v3.8.0
 - name: koalaman/shellcheck@v0.10.0
-- name: rhysd/actionlint@v1.7.0
+- name: rhysd/actionlint@v1.7.1
 - name: takumin/gjson@v0.0.2
 - name: aquasecurity/trivy@v0.51.4
 - name: x-motemen/gobump@v0.2.0
