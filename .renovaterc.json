@@ -11,5 +11,8 @@
   "postUpdateOptions": [
     "gomodUpdateImportPaths",
     "gomodTidy"
-  ]
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  }
 }
