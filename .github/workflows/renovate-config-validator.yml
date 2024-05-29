@@ -1,0 +1,25 @@
+name: Renovate Config Validator
+on:
+  workflow_call:
+  pull_request:
+    paths:
+    - '.renovaterc.json'
+    - '.github/workflows/renovate-config-validator.yml'
+permissions:
+  contents: read
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'lts/*'
+        cache: 'npm'
+        cache-dependency-path: '.renovaterc.json'
+    - name: Renovate Config Validator
+      run: npx --yes --package renovate -- renovate-config-validator --strict
