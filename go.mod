@@ -8,7 +8,7 @@ require (
 )
 
 require (
-	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.3 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 )
 
