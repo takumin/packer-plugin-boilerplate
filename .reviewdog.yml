@@ -27,3 +27,10 @@ runner:
   staticcheck:
     cmd: staticcheck ./...
     format: staticcheck
+  editorconfig-checker:
+    cmd: ec -no-color
+    errorformat:
+    - '%-G%+P%f:'
+    - '%\s%+%l: %m'
+    - '%-Q'
+    - '%-G%.%#'
