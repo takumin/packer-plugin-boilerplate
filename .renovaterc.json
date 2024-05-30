@@ -7,12 +7,22 @@
   "timezone": "Asia/Tokyo",
   "dependencyDashboard": true,
   "automerge": true,
-  "platformAutomerge": true,
   "postUpdateOptions": [
     "gomodUpdateImportPaths",
     "gomodTidy"
   ],
   "lockFileMaintenance": {
     "enabled": true
-  }
+  },
+  "packageRules": [
+    {
+      "matchDatasources": ["golang-version"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["indirect"],
+      "enabled": true
+    }
+  ]
 }
