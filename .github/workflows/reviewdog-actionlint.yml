@@ -1,21 +1,27 @@
 name: Reviewdog (actionlint)
 on:
   workflow_call:
+    inputs:
+      jobname:
+        type: string
+        required: false
+        description: 'A jobname passed from the caller workflow'
+        default: 'reviewdog-actionlint'
   pull_request:
     paths:
-    - '.github/actions/setup-go/action.yaml'
-    - '.github/actions/setup-aqua/action.yaml'
-    - '.github/actions/setup-reviewdog/action.yaml'
-    - '.github/dependency/actions-cache-version'
-    - '.github/workflows/reviewdog-actionlint.yml'
     - '.aqua.yaml'
     - '.reviewdog.yml'
+    - '.github/actions/*.yml'
+    - '.github/actions/*.yaml'
     - '.github/workflows/*.yml'
     - '.github/workflows/*.yaml'
 permissions:
   checks: write
   contents: read
   pull-requests: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  cancel-in-progress: true
 jobs:
   ci:
     name: CI
@@ -32,6 +38,6 @@ jobs:
       id: reviewdog
       uses: ./.github/actions/setup-reviewdog
     - name: Reviewdog
-      run: reviewdog -runners 'actionlint' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
+      run: reviewdog -runners 'actionlint' -reporter '${{ steps.reviewdog.outputs.reporter }}' -filter-mode 'nofilter'
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

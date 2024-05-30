@@ -1,4 +1,4 @@
-name: Reviewdog (gjson-validate)
+name: Reviewdog (editorconfig-checker)
 on:
   workflow_call:
     inputs:
@@ -6,18 +6,11 @@ on:
         type: string
         required: false
         description: 'A jobname passed from the caller workflow'
-        default: 'reviewdog-gjson-validate'
+        default: 'reviewdog-editorconfig-checker'
   pull_request:
-    paths:
-    - '.github/actions/setup-go/action.yaml'
-    - '.github/actions/setup-aqua/action.yaml'
-    - '.github/actions/setup-reviewdog/action.yaml'
-    - '.github/workflows/reviewdog-gjson-validate.yml'
-    - '.aqua.yaml'
-    - '.reviewdog.yml'
-    - '**.json'
-    - '**.json.golden'
-    - '!**.invalid.json.golden'
+    paths-ignore:
+    - 'LICENSE'
+    - '**.md'
 permissions:
   checks: write
   contents: read
@@ -33,14 +26,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Setup Go
-      uses: ./.github/actions/setup-go
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
     - name: Setup Reviewdog
       id: reviewdog
       uses: ./.github/actions/setup-reviewdog
     - name: Reviewdog
-      run: reviewdog -runners 'gjson-validate' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
+      run: reviewdog -runners 'editorconfig-checker' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
