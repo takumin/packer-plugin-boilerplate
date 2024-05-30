@@ -1,6 +1,12 @@
 name: Application
 on:
   workflow_call:
+    inputs:
+      jobname:
+        type: string
+        required: false
+        description: 'A jobname passed from the caller workflow'
+        default: 'application'
   pull_request:
     paths:
     # Build
@@ -11,7 +17,6 @@ on:
     # GitHub Actions
     - '.github/actions/setup-go/action.yaml'
     - '.github/actions/setup-aqua/action.yaml'
-    - '.github/dependency/actions-cache-version'
     - '.github/workflows/application.yml'
     # Go
     - '**.go'
@@ -19,6 +24,9 @@ on:
     - 'go.sum'
 permissions:
   contents: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  cancel-in-progress: true
 jobs:
   ci:
     name: CI

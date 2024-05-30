@@ -1,12 +1,21 @@
 name: Renovate Config Validator
 on:
   workflow_call:
+    inputs:
+      jobname:
+        type: string
+        required: false
+        description: 'A jobname passed from the caller workflow'
+        default: 'renovate-config-validator'
   pull_request:
     paths:
     - '.renovaterc.json'
     - '.github/workflows/renovate-config-validator.yml'
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  cancel-in-progress: true
 jobs:
   ci:
     name: CI

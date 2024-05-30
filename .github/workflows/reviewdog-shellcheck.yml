@@ -1,12 +1,17 @@
 name: Reviewdog (shellcheck)
 on:
   workflow_call:
+    inputs:
+      jobname:
+        type: string
+        required: false
+        description: 'A jobname passed from the caller workflow'
+        default: 'reviewdog-shellcheck'
   pull_request:
     paths:
     - '.github/actions/setup-go/action.yaml'
     - '.github/actions/setup-aqua/action.yaml'
     - '.github/actions/setup-reviewdog/action.yaml'
-    - '.github/dependency/actions-cache-version'
     - '.github/workflows/reviewdog-shellcheck.yml'
     - '.aqua.yaml'
     - '.reviewdog.yml'
@@ -16,6 +21,9 @@ permissions:
   checks: write
   contents: read
   pull-requests: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  cancel-in-progress: true
 jobs:
   ci:
     name: CI

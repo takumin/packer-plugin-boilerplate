@@ -1,6 +1,12 @@
 name: Reviewdog (gyaml-validate)
 on:
   workflow_call:
+    inputs:
+      jobname:
+        type: string
+        required: false
+        description: 'A jobname passed from the caller workflow'
+        default: 'reviewdog-gyaml-validate'
   pull_request:
     paths:
     - '.github/actions/setup-go/action.yaml'
@@ -15,6 +21,9 @@ permissions:
   checks: write
   contents: read
   pull-requests: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  cancel-in-progress: true
 jobs:
   ci:
     name: CI
