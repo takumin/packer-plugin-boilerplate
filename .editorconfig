@@ -23,3 +23,6 @@ indent_style = tab
 
 [go.{mod,work}]
 indent_style = tab
+
+[{LICENSE,*.md}]
+indent_style = unset
