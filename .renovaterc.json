@@ -1,11 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
+    "config:best-practices",
     "github>aquaproj/aqua-renovate-config#2.3.1"
   ],
   "timezone": "Asia/Tokyo",
-  "dependencyDashboard": true,
   "automerge": true,
   "postUpdateOptions": [
     "gomodUpdateImportPaths",
