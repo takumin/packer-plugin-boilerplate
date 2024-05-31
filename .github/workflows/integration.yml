@@ -5,41 +5,49 @@ on:
     - 'main'
     tags:
     - 'v*'
-permissions:
-  checks: write
-  contents: write
-  pull-requests: write
+permissions: {}
 jobs:
   application:
     name: Application
     uses: ./.github/workflows/application.yml
+    permissions: { contents: write }
   reviewdog-actionlint:
     name: Reviewdog (actionlint)
     uses: ./.github/workflows/reviewdog-actionlint.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-editorconfig-checker:
     name: Reviewdog (editorconfig-checker)
     uses: ./.github/workflows/reviewdog-editorconfig-checker.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-gjson-validate:
     name: Reviewdog (gjson-validate)
     uses: ./.github/workflows/reviewdog-gjson-validate.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-gyaml-validate:
     name: Reviewdog (gyaml-validate)
     uses: ./.github/workflows/reviewdog-gyaml-validate.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-gofmt:
     name: Reviewdog (gofmt)
     uses: ./.github/workflows/reviewdog-gofmt.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-gosec:
     name: Reviewdog (gosec)
     uses: ./.github/workflows/reviewdog-gosec.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-govet:
     name: Reviewdog (govet)
     uses: ./.github/workflows/reviewdog-govet.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-shellcheck:
     name: Reviewdog (shellcheck)
     uses: ./.github/workflows/reviewdog-shellcheck.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-shfmt:
     name: Reviewdog (shfmt)
     uses: ./.github/workflows/reviewdog-shfmt.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
   reviewdog-staticcheck:
     name: Reviewdog (staticcheck)
     uses: ./.github/workflows/reviewdog-staticcheck.yml
+    permissions: { contents: read, checks: write, pull-requests: write }
