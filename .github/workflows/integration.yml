@@ -11,6 +11,10 @@ jobs:
     name: Application
     uses: ./.github/workflows/application.yml
     permissions: { contents: write }
+  renovate-config-validator:
+    name: Renovate Config Validator
+    uses: ./.github/workflows/renovate-config-validator.yml
+    permissions: { contents: read }
   reviewdog-actionlint:
     name: Reviewdog (actionlint)
     uses: ./.github/workflows/reviewdog-actionlint.yml
