@@ -7,7 +7,10 @@ require (
 	github.com/hashicorp/packer-plugin-sdk v0.5.3
 )
 
-require github.com/cenkalti/backoff/v3 v3.2.2 // indirect
+require (
+	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
+)
 
 require (
 	cloud.google.com/go v0.114.0 // indirect
@@ -57,7 +60,6 @@ require (
 	github.com/hashicorp/go-sockaddr v1.0.6 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
-	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/serf v0.10.1 // indirect
 	github.com/hashicorp/vault/api v1.14.0 // indirect
