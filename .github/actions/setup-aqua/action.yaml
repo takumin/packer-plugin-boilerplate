@@ -8,12 +8,12 @@ runs:
     shell: bash
     run: echo "aqua=${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}" >> $GITHUB_OUTPUT
   - name: Aqua Tools Cache
-    uses: actions/cache@v4
+    uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
     with:
       path: ${{ steps.cache-dir.outputs.aqua }}
       key: aqua-tools-${{ runner.os }}-${{ hashFiles('**/.aqua.yaml') }}
   - name: Setup Aqua
-    uses: aquaproj/aqua-installer@v3.0.1
+    uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
     with:
       aqua_version: v2.29.0
       aqua_opts: -a
