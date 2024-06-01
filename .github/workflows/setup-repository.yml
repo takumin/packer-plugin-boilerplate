@@ -19,8 +19,7 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5
       with:
-        # NOTE: Specify the version because 'go-version-file' will result in an error.
-        go-version: '1.22.2'
+        go-version-file: 'go.mod'
     - name: Setup Tools
       run: go install github.com/sirkon/go-imports-rename@latest
     - name: Setup Repository
