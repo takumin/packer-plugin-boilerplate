@@ -69,9 +69,7 @@ describe: build
 .PHONY: install
 install: $(PLUGIN_PATH)/$(PLUGIN_NAME)
 $(PLUGIN_PATH)/$(PLUGIN_NAME): bin/$(APPNAME)
-	mkdir -p $(PLUGIN_PATH)
-	cp bin/$(APPNAME) $(PLUGIN_PATH)/$(PLUGIN_NAME)
-	cd bin && sha256sum $(APPNAME) > $(PLUGIN_PATH)/$(PLUGIN_NAME)_SHA256SUM
+	packer plugins install --path bin/$(APPNAME) $(PLUGIN_REPO)
 
 .PHONY: check
 check: install
@@ -79,7 +77,6 @@ check: install
 
 .PHONY: run
 run: check
-	packer init example
 	packer build example
 
 .PHONY: snapshot
