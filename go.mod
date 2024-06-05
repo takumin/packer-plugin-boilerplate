@@ -1,6 +1,6 @@
 module github.com/takumin/packer-plugin-boilerplate
 
-go 1.22.3
+go 1.22.4
 
 require (
 	github.com/hashicorp/hcl/v2 v2.20.1
