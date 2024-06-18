@@ -22,11 +22,7 @@ func (b *Builder) ConfigSpec() hcldec.ObjectSpec {
 }
 
 func (b *Builder) Prepare(raws ...interface{}) (generatedVars []string, warnings []string, err error) {
-	warnings, err = b.config.Prepare(raws...)
-	if err != nil {
-		return nil, warnings, err
-	}
-	return nil, warnings, nil
+	return b.config.Prepare(raws...)
 }
 
 func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (packer.Artifact, error) {
