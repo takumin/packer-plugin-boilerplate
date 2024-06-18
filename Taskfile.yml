@@ -3,10 +3,6 @@
 version: '3'
 
 vars:
-  GOOS:
-    sh: go env GOOS
-  GOARCH:
-    sh: go env GOARCH
   APPNAME:
     sh: basename {{.TASKFILE_DIR}}
   PKGNAME:
@@ -30,7 +26,7 @@ vars:
     sh: echo '{{.PKGNAME}}' | sed -E 's/packer-plugin-//'
   PLUGIN_VERSION:
     sh: test -z '{{.PRERELEASE}}' && echo '{{.VERSION}}' || echo '{{.VERSION}}-{{.PRERELEASE}}'
-  PLUGIN_BINNAME: '{{.APPNAME}}_v{{.PLUGIN_VERSION}}_{{.API_VERSION}}_{{.GOOS}}_{{.GOARCH}}'
+  PLUGIN_BINNAME: '{{.APPNAME}}_v{{.PLUGIN_VERSION}}_{{.API_VERSION}}_{{OS}}_{{ARCH}}'
 
 tasks:
   default:
