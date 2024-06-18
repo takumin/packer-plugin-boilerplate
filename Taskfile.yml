@@ -26,7 +26,7 @@ vars:
     sh: echo '{{.PKGNAME}}' | sed -E 's/packer-plugin-//'
   PLUGIN_VERSION:
     sh: test -z '{{.PRERELEASE}}' && echo '{{.VERSION}}' || echo '{{.VERSION}}-{{.PRERELEASE}}'
-  PLUGIN_BINNAME: '{{.APPNAME}}_v{{.PLUGIN_VERSION}}_{{.API_VERSION}}_{{OS}}_{{ARCH}}'
+  PLUGIN_BINNAME: '{{.APPNAME}}_v{{.PLUGIN_VERSION}}_{{.API_VERSION}}_{{OS}}_{{ARCH}}{{exeExt}}'
 
 tasks:
   default:
@@ -164,21 +164,21 @@ tasks:
       - '**/*.go'
       - exclude: '**/*_test.go'
     generates:
-      - bin/{{.APPNAME}}{{exeExt}}
+      - bin/{{.PLUGIN_BINNAME}}
     env:
       CGO_ENABLED: 0
     cmds:
-      - go build {{.BUILDFLAGS}} -o bin/{{.APPNAME}}{{exeExt}}
+      - go build {{.BUILDFLAGS}} -o bin/{{.PLUGIN_BINNAME}}
 
   check:
     run: once
     deps: [build]
     sources:
-      - bin/{{.APPNAME}}{{exeExt}}
+      - bin/{{.PLUGIN_BINNAME}}
     generates:
       - .task/.done_check
     cmds:
-      - cd bin && packer-sdc plugin-check {{.APPNAME}}{{exeExt}}
+      - cd bin && packer-sdc plugin-check {{.PLUGIN_BINNAME}}
       - cmd: touch .task/.done_check
         silent: true
 
@@ -186,17 +186,17 @@ tasks:
     run: once
     deps: [check]
     sources:
-      - bin/{{.APPNAME}}{{exeExt}}
+      - bin/{{.PLUGIN_BINNAME}}
     generates:
       - '{{.HOME}}/.packer.d/plugins/{{.PLUGIN_REPO}}/{{.PLUGIN_BINNAME}}'
     cmds:
-      - packer plugins install --path bin/{{.APPNAME}}{{exeExt}} {{.PLUGIN_REPO}}
+      - packer plugins install --path bin/{{.PLUGIN_BINNAME}} {{.PLUGIN_REPO}}
 
   describe:
     run: once
     deps: [build]
     cmds:
-      - bin/{{.APPNAME}}{{exeExt}} describe | jq
+      - bin/{{.PLUGIN_BINNAME}} describe | jq
 
   run:
     run: once
