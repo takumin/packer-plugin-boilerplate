@@ -36,6 +36,7 @@ tasks:
   default:
     silent: true
     deps:
+      - mod
       - gen
       - fmt
       - vet
@@ -45,16 +46,28 @@ tasks:
       - test
       - build
 
+  mod:
+    run: once
+    sources:
+      - go.mod
+      - go.sum
+    generates:
+      - .task/.done_mod
+    cmds:
+      - go mod download
+      - go mod tidy
+      - cmd: touch .task/.done_mod
+        silent: true
+
   gen:
     run: once
+    deps: [mod]
     sources:
       - '**/*.go'
     generates:
-      - .task/.done_gen
+      - '**/*.hcl2spec.go'
     cmds:
       - go generate ./...
-      - cmd: touch .task/.done_gen
-        silent: true
 
   fmt:
     run: once
