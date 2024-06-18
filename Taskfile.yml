@@ -36,6 +36,7 @@ tasks:
   default:
     silent: true
     deps:
+      - tool
       - mod
       - gen
       - fmt
@@ -46,8 +47,20 @@ tasks:
       - test
       - build
 
+  tool:
+    run: once
+    sources:
+      - .aqua.yaml
+    generates:
+      - .task/.done_tool
+    cmds:
+      - aqua install -a
+      - cmd: touch .task/.done_tool
+        silent: true
+
   mod:
     run: once
+    deps: [tool]
     sources:
       - go.mod
       - go.sum
