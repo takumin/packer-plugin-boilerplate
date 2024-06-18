@@ -15,22 +15,22 @@ type Config struct {
 	ctx interpolate.Context
 }
 
-func (c *Config) Prepare(raws ...interface{}) ([]string, error) {
+func (c *Config) Prepare(raws ...interface{}) ([]string, []string, error) {
 	err := config.Decode(c, &config.DecodeOpts{
 		PluginType:         BuilderId,
 		Interpolate:        true,
 		InterpolateContext: &c.ctx,
 	}, raws...)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var errs *packer.MultiError
 	warnings := make([]string, 0)
 
 	if errs != nil && len(errs.Errors) > 0 {
-		return warnings, errs
+		return nil, warnings, errs
 	}
 
-	return warnings, nil
+	return nil, warnings, nil
 }
