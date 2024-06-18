@@ -47,6 +47,13 @@ tasks:
       - test
       - build
 
+  clean:
+    cmds:
+      - rm -f coverage.out
+      - rm -f coverage.html
+      - rm -fr bin
+      - rm -fr .task
+
   tool:
     run: once
     sources:
