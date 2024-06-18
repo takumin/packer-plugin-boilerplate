@@ -11,7 +11,7 @@ vars:
     sh: gobump show -r version
   REVISION:
     sh: git rev-parse HEAD 2>/dev/null
-  PRERELEASE: '{{default "dev" .PRERELEASE}}'
+  PRERELEASE: '{{.PRERELEASE | default "dev" .PRERELEASE}}'
   FULLVERSION: '{{.VERSION}}{{if ne "" .PRERELEASE}}-{{.PRERELEASE}}{{end}}'
   BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{OS}}_{{ARCH}}{{exeExt}}'
 
