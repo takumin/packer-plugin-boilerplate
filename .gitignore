@@ -1,3 +1,6 @@
 /bin/
 /dist/
+/.task/
 crash.log
+coverage.out
+coverage.html

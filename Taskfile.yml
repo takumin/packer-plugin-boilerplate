@@ -1,0 +1,176 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GOOS:
+    sh: go env GOOS
+  GOARCH:
+    sh: go env GOARCH
+  APPNAME:
+    sh: basename {{.TASKFILE_DIR}}
+  PKGNAME:
+    sh: go mod edit -json | jq -r '.Module.Path'
+  VERSION:
+    sh: gobump show -r version
+  REVISION:
+    sh: git rev-parse HEAD 2>/dev/null
+  PRERELEASE: '{{default "dev" .PRERELEASE}}'
+
+  LDFLAGS_PRE: -s -w -buildid=
+  LDFLAGS_POST: -extldflags -static
+  LDFLAGS_VERSION: -X "{{.PKGNAME}}/version.Version={{.VERSION}}"
+  LDFLAGS_REVISION: -X "{{.PKGNAME}}/version.Revision={{.REVISION}}"
+  LDFLAGS_PRERELEASE: -X "{{.PKGNAME}}/version.VersionPrerelease={{.PRERELEASE}}"
+  LDFLAGS: '{{.LDFLAGS_PRE}} {{.LDFLAGS_VERSION}} {{.LDFLAGS_REVISION}} {{.LDFLAGS_PRERELEASE}} '
+  BUILDFLAGS: -trimpath -ldflags '{{.LDFLAGS}}'
+
+  API_VERSION: '{{default "x5.0" .API_VERSION}}'
+  PLUGIN_REPO:
+    sh: echo '{{.PKGNAME}}' | sed -E 's/packer-plugin-//'
+  PLUGIN_VERSION:
+    sh: test -z '{{.PRERELEASE}}' && echo '{{.VERSION}}' || echo '{{.VERSION}}-{{.PRERELEASE}}'
+  PLUGIN_BINNAME: '{{.APPNAME}}_v{{.PLUGIN_VERSION}}_{{.API_VERSION}}_{{.GOOS}}_{{.GOARCH}}'
+
+tasks:
+  default:
+    silent: true
+    deps:
+      - gen
+      - fmt
+      - vet
+      - sec
+      - vuln
+      - lint
+      - test
+      - build
+
+  gen:
+    run: once
+    sources:
+      - '**/*.go'
+    generates:
+      - .task/.done_gen
+    cmds:
+      - go generate ./...
+      - cmd: touch .task/.done_gen
+        silent: true
+
+  fmt:
+    run: once
+    deps: [gen]
+    sources:
+      - '**/*.go'
+    generates:
+      - .task/.done_fmt
+    cmds:
+      - gofmt -e -d .
+      - cmd: touch .task/.done_fmt
+        silent: true
+
+  vet:
+    run: once
+    deps: [fmt]
+    sources:
+      - '**/*.go'
+    generates:
+      - .task/.done_vet
+    cmds:
+      - go vet ./...
+      - cmd: touch .task/.done_vet
+        silent: true
+
+  sec:
+    run: once
+    deps: [fmt]
+    sources:
+      - '**/*.go'
+    generates:
+      - .task/.done_sec
+    cmds:
+      - gosec -quiet -fmt golint ./...
+      - cmd: touch .task/.done_sec
+        silent: true
+
+  vuln:
+    run: once
+    deps: [fmt]
+    sources:
+      - '**/*.go'
+    generates:
+      - .task/.done_vuln
+    cmds:
+      - trivy fs -q -s HIGH,CRITICAL --scanners vuln,config,secret,license .
+      - cmd: touch .task/.done_vuln
+        silent: true
+
+  lint:
+    run: once
+    deps: [fmt]
+    sources:
+      - '**/*.go'
+    generates:
+      - .task/.done_lint
+    cmds:
+      - staticcheck ./...
+      - cmd: touch .task/.done_lint
+        silent: true
+
+  test:
+    run: once
+    deps: [fmt]
+    sources:
+      - '**/*.go'
+    generates:
+      - coverage.out
+      - coverage.html
+    cmds:
+      - go test -race {{.BUILDFLAGS}} -cover -covermode atomic -coverprofile=coverage.out ./...
+      - go tool cover -html=coverage.out -o coverage.html
+
+  build:
+    run: once
+    deps: [fmt]
+    sources:
+      - '**/*.go'
+      - exclude: '**/*_test.go'
+    generates:
+      - bin/{{.APPNAME}}{{exeExt}}
+    env:
+      CGO_ENABLED: 0
+    cmds:
+      - go build {{.BUILDFLAGS}} -o bin/{{.APPNAME}}{{exeExt}}
+
+  check:
+    run: once
+    deps: [build]
+    sources:
+      - bin/{{.APPNAME}}{{exeExt}}
+    generates:
+      - .task/.done_check
+    cmds:
+      - cd bin && packer-sdc plugin-check {{.APPNAME}}{{exeExt}}
+      - cmd: touch .task/.done_check
+        silent: true
+
+  install:
+    run: once
+    deps: [check]
+    sources:
+      - bin/{{.APPNAME}}{{exeExt}}
+    generates:
+      - '{{.HOME}}/.packer.d/plugins/{{.PLUGIN_REPO}}/{{.PLUGIN_BINNAME}}'
+    cmds:
+      - packer plugins install --path bin/{{.APPNAME}}{{exeExt}} {{.PLUGIN_REPO}}
+
+  describe:
+    run: once
+    deps: [build]
+    cmds:
+      - bin/{{.APPNAME}}{{exeExt}} describe | jq
+
+  run:
+    run: once
+    deps: [install]
+    cmds:
+      - packer build example
