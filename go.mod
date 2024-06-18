@@ -4,7 +4,7 @@ go 1.22.4
 
 require (
 	github.com/hashicorp/hcl/v2 v2.20.1
-	github.com/hashicorp/packer-plugin-sdk v0.5.3
+	github.com/hashicorp/packer-plugin-sdk v0.5.4
 )
 
 require (
