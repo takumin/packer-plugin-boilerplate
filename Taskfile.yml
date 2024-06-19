@@ -3,25 +3,29 @@
 version: '3'
 
 vars:
+  GOOS: '{{.GOOS | default OS .GOOS}}'
+  GOARCH: '{{.GOARCH | default ARCH .GOARCH}}'
+
   APPNAME:
     sh: basename {{.TASKFILE_DIR}}
   PKGNAME:
     sh: go mod edit -json | jq -r '.Module.Path'
+
   VERSION:
     sh: gobump show -r version
   REVISION:
     sh: git rev-parse HEAD 2>/dev/null
   PRERELEASE: '{{.PRERELEASE | default "dev" .PRERELEASE}}'
   FULLVERSION: '{{.VERSION}}{{if ne "" .PRERELEASE}}-{{.PRERELEASE}}{{end}}'
-  BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{OS}}_{{ARCH}}{{exeExt}}'
 
-  LDFLAGS_PRE: -s -w -buildid=
-  LDFLAGS_POST: -extldflags -static
+  BINEXT: '{{if eq "windows" .GOOS}}.exe{{end}}'
+  BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{.GOOS}}_{{.GOARCH}}{{.BINEXT}}'
+
   LDFLAGS_VERSION: -X "{{.PKGNAME}}/version.Version={{.VERSION}}"
   LDFLAGS_REVISION: -X "{{.PKGNAME}}/version.Revision={{.REVISION}}"
   LDFLAGS_PRERELEASE: -X "{{.PKGNAME}}/version.VersionPrerelease={{.PRERELEASE}}"
-  LDFLAGS: '{{.LDFLAGS_PRE}} {{.LDFLAGS_VERSION}} {{.LDFLAGS_REVISION}} {{.LDFLAGS_PRERELEASE}} '
-  BUILDFLAGS: -trimpath -ldflags '{{.LDFLAGS}}'
+  LDFLAGS_VARIABLE: '{{.LDFLAGS_VERSION}} {{.LDFLAGS_REVISION}} {{.LDFLAGS_PRERELEASE}}'
+  BUILDFLAGS: -trimpath -ldflags '-s -w -buildid= {{.LDFLAGS_VARIABLE}} -extldflags -static'
 
 tasks:
   default:
@@ -67,6 +71,7 @@ tasks:
     cmds:
       - go mod download
       - go mod tidy
+      - go mod verify
       - cmd: touch .task/.done_mod
         silent: true
 
@@ -162,6 +167,8 @@ tasks:
       - bin/{{.BINNAME}}
     env:
       CGO_ENABLED: 0
+      GOOS: '{{.GOOS}}'
+      GOARCH: '{{.GOARCH}}'
     cmds:
       - go build {{.BUILDFLAGS}} -o bin/{{.BINNAME}}
 
@@ -191,7 +198,7 @@ tasks:
         sh: bin/{{.BINNAME}} describe | jq -r '.api_version'
       PLUGIN_REPO:
         sh: echo '{{.PKGNAME}}' | sed -E 's/packer-plugin-//'
-      PLUGIN_BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{.API_VERSION}}_{{OS}}_{{ARCH}}{{exeExt}}'
+      PLUGIN_BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{.API_VERSION}}_{{.GOOS}}_{{.GOARCH}}{{.BINEXT}}'
     sources:
       - bin/{{.BINNAME}}
     generates:
@@ -204,3 +211,25 @@ tasks:
     deps: [install]
     cmds:
       - packer build example
+
+  release:
+    run: once
+    deps: [build]
+    vars:
+      API_VERSION:
+        sh: go run . describe | jq -r '.api_version'
+      PLUGIN_BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{.API_VERSION}}_{{.GOOS}}_{{.GOARCH}}{{.BINEXT}}'
+    sources:
+      - bin/{{.BINNAME}}
+      - README.md
+      - LICENSE
+    generates:
+      - dist/{{.PLUGIN_BINNAME}}
+      - dist/README.md
+      - dist/LICENSE
+    cmds:
+      - rm -fr dist
+      - mkdir dist
+      - cp 'bin/{{.BINNAME}}' 'dist/{{.PLUGIN_BINNAME}}'
+      - cp 'README.md' 'dist/README.md'
+      - cp 'LICENSE' 'dist/LICENSE'
