@@ -1,3 +1,6 @@
+OWNER_NAME := Takumi Takahashi
+OWNER_MAIL := takumiiinn@gmail.com
+
 APPNAME  := $(shell basename $(CURDIR))
 PKGNAME  := $(shell go mod edit -json | jq -r '.Module.Path')
 VERSION  := $(shell git describe --abbrev=0 --tags 2>/dev/null)
@@ -79,12 +82,25 @@ check: install
 run: check
 	packer build example
 
+.PHONY: gpg
+gpg: secret/gpghome
+secret/gpghome:
+	@mkdir -p -m 0700 secret/gpghome
+	@gpg \
+		--homedir secret/gpghome \
+		--pinentry-mode loopback \
+		--passphrase '' \
+		--no-tty \
+		--quick-generate-key \
+		"$(OWNER_NAME) <$(OWNER_MAIL)>" \
+		future-default default 0
+
 .PHONY: snapshot
-snapshot: build
+snapshot: build gpg
 	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --clean --snapshot
 
 .PHONY: release
-release: build
+release: build gpg
 ifneq ($(GITHUB_TOKEN),)
 	API_VERSION="$(shell ./bin/$(APPNAME) describe | jq -r '.api_version')" goreleaser release --clean
 endif
@@ -93,4 +109,5 @@ endif
 clean:
 	rm -rf bin
 	rm -rf dist
+	rm -rf secret
 	rm -rf $(PLUGIN_PATH)

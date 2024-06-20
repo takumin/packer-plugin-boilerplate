@@ -16,17 +16,21 @@ builds:
   - -trimpath
   ldflags:
   - -s -w -buildid=
-  - -X {{ .ModulePath }}/version.Version={{ .Version }}
+  - -X {{ .ModulePath }}/version.Version={{ .RawVersion }}
   - -X {{ .ModulePath }}/version.Revision={{ .FullCommit }}
-  - -X {{ .ModulePath }}/version.VersionPrerelease=
+  - -X {{ .ModulePath }}/version.VersionPrerelease={{ if .IsSnapshot }}dev{{ end }}
   - -extldflags -static
   mod_timestamp: '{{ .CommitTimestamp }}'
-  binary: '{{ .ProjectName }}_v{{ .Version }}_{{ .Env.API_VERSION }}_{{ .Os }}_{{ .Arch }}'
+  binary: '{{ .ProjectName }}_v{{ .RawVersion }}{{ if .IsSnapshot }}-dev{{ end }}_{{ .Env.API_VERSION }}_{{ .Os }}_{{ .Arch }}'
 archives:
-- name_template: '{{ .ProjectName }}_v{{ .Version }}_{{ .Env.API_VERSION }}_{{ .Os }}_{{ .Arch }}'
+- name_template: '{{ .ProjectName }}_v{{ .RawVersion }}{{ if .IsSnapshot }}-dev{{ end }}_{{ .Env.API_VERSION }}_{{ .Os }}_{{ .Arch }}'
   format: zip
 checksum:
-  name_template: '{{ .ProjectName }}_v{{ .Version }}_SHA256SUMS'
+  name_template: '{{ .ProjectName }}_v{{ .RawVersion }}{{ if .IsSnapshot }}-dev{{ end }}_SHA256SUMS'
   algorithm: sha256
+signs:
+- artifacts: checksum
+  env:
+  - GNUPGHOME=secret/gpghome
 release:
   prerelease: auto
