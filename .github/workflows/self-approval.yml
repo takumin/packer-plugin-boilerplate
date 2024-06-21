@@ -8,10 +8,15 @@ on:
     - 'ready_for_review'
 jobs:
   approval:
-    name: Approval
+    name: Self Approval
     if: ${{ github.event.pull_request.user.login == github.repository_owner && ! github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-    - uses: hmarr/auto-approve-action@v3
+    - name: Self Approval
+      run: gh pr review --repo "${REPOSITORY}" --approve "${PR_NUMBER}"
+      env:
+        REPOSITORY: ${{ github.repository }}
+        PR_NUMBER: ${{ github.event.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
