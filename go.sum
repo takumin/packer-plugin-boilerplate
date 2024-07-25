@@ -155,8 +155,8 @@ github.com/hashicorp/go-cleanhttp v0.5.2 h1:035FKYIWjmULyFRBKPs8TBQoi0x6d9G4xc9n
 github.com/hashicorp/go-cleanhttp v0.5.2/go.mod h1:kO/YDlP8L1346E6Sodw+PrpBSV4/SoxCXGY6BqNFT48=
 github.com/hashicorp/go-getter/gcs/v2 v2.2.3 h1:m/KO1hAqSrL8sH91c7uyJzVhRtfk0GtRD+jU6Buy3nc=
 github.com/hashicorp/go-getter/gcs/v2 v2.2.3/go.mod h1:HFbVYUSI6RERon4TTKpsloiYMnFYYGuJu0EaWUTfb9w=
-github.com/hashicorp/go-getter/s3/v2 v2.2.2 h1:ProI1SMBNRt17gC3I8XCMdh35sXN68IUieYnWXwfwew=
-github.com/hashicorp/go-getter/s3/v2 v2.2.2/go.mod h1:5MRjeGjI4DqzkRYa+g6OuNJDR0MamdE5VqDPdI42+vQ=
+github.com/hashicorp/go-getter/s3/v2 v2.2.3 h1:H2C6b9n1NyKiuxqpAbF3pIOMKSD2efy0vmtyC7khPrQ=
+github.com/hashicorp/go-getter/s3/v2 v2.2.3/go.mod h1:SZQ4oeqBoOAoYfrUZ35PT6WcCeGeBHd22ZnI/yG2Iyo=
 github.com/hashicorp/go-getter/v2 v2.2.3 h1:6CVzhT0KJQHqd9b0pK3xSP0CM/Cv+bVhk+jcaRJ2pGk=
 github.com/hashicorp/go-getter/v2 v2.2.3/go.mod h1:hp5Yy0GMQvwWVUmwLs3ygivz1JSLI323hdIE9J9m7TY=
 github.com/hashicorp/go-hclog v1.6.3 h1:Qr2kF+eVWjTiYmU7Y31tYlP1h0q/X3Nl3tPGdaB11/k=
