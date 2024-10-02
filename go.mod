@@ -59,7 +59,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/serf v0.10.1 // indirect
 	github.com/hashicorp/vault/api v1.15.0 // indirect
-	github.com/hashicorp/yamux v0.1.1 // indirect
+	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
 	github.com/jcmturner/dnsutils/v2 v2.0.0 // indirect
 	github.com/jcmturner/gofork v1.7.6 // indirect
