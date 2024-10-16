@@ -29,10 +29,10 @@ github.com/ChrisTrenkamp/goxpath v0.0.0-20210404020558-97928f7e12b6/go.mod h1:nu
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.24.3 h1:cb3br57K508pQEFgBxn9GDhPS9HefpyMPK1RzmtMNzk=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.24.3/go.mod h1:itPGVDKf9cC/ov4MdvJ2QZ0khw4bfoo9jzwTJlaxy2k=
-github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.48.2 h1:RopCq1mZTydpZpWfeYDvsnKR5L8VeaNt5JR5wiMfh7Q=
-github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.48.2/go.mod h1:tlLrnqq33OLuNnYbqswyI5ckZ0QjuM2DFIuaraxxDEU=
-github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/cloudmock v0.48.2 h1:ffI2ensdT33alWXmBDi/7cvCV7K3o7TF5oE44g8tiN0=
-github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/cloudmock v0.48.2/go.mod h1:pNP/L2wDlaQnQlFvkDKGSruDoYRpmAxB6drgsskfYwg=
+github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.48.3 h1:xir5X8TS8UBVPWg2jHL+cSTf0jZgqYQSA54TscSt1/0=
+github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.48.3/go.mod h1:SsdWig2J5PMnfMvfJuEb1uZa8Y+kvNyvrULFo69gTFk=
+github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/cloudmock v0.48.3 h1:Nl7phYyHjnqofWDpD+6FYdiwtNIxebn0AHLry7Sxb0M=
+github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/cloudmock v0.48.3/go.mod h1:pNP/L2wDlaQnQlFvkDKGSruDoYRpmAxB6drgsskfYwg=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.48.3 h1:2vcVkrNdSMJpoOVAWi9ApsQR5iqNeFGt5Qx8Xlt3IoI=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.48.3/go.mod h1:wRbFgBQUVm1YXrvWKofAEmq9HNJTDphbAaJSSX01KUI=
 github.com/agext/levenshtein v1.2.3 h1:YB2fHEn0UJagG8T1rrWknE3ZQzWM06O8AMAatNn7lmo=
