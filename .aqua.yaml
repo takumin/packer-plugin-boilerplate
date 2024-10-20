@@ -9,7 +9,7 @@ packages:
 - name: goreleaser/goreleaser@v2.3.2
 - name: securego/gosec@v2.21.4
 - name: reviewdog/reviewdog@v0.20.2
-- name: mvdan/sh@v3.9.0
+- name: mvdan/sh@v3.10.0
 - name: koalaman/shellcheck@v0.10.0
 - name: rhysd/actionlint@v1.7.3
 - name: takumin/gjson@v0.0.3
