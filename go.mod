@@ -7,7 +7,7 @@ require (
 	github.com/hashicorp/packer-plugin-sdk v0.5.4
 )
 
-require github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
+require github.com/apparentlymart/go-textseg/v16 v16.0.0 // indirect
 
 require (
 	cel.dev/expr v0.18.0 // indirect
