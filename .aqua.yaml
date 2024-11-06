@@ -19,4 +19,4 @@ packages:
 - name: hashicorp/packer@v1.11.2
 - name: takumin/gyaml@v0.0.2
 - name: editorconfig-checker/editorconfig-checker@v3.0.3
-- name: go-task/task@v3.39.2
+- name: go-task/task@v3.40.0
