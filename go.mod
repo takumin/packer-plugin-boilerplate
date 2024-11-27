@@ -131,6 +131,6 @@ require (
 )
 
 // https://github.com/hashicorp/packer-plugin-sdk/issues/187
-require github.com/zclconf/go-cty v1.15.0
+require github.com/zclconf/go-cty v1.15.1
 
 replace github.com/zclconf/go-cty => github.com/nywilken/go-cty v1.13.3
