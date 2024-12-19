@@ -7,7 +7,10 @@ require (
 	github.com/hashicorp/packer-plugin-sdk v0.5.4
 )
 
-require github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
+require (
+	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
+	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
+)
 
 require (
 	cel.dev/expr v0.19.1 // indirect
@@ -30,7 +33,6 @@ require (
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
 	github.com/bodgit/ntlmssp v0.0.0-20240506230425-31973bb52d9b // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
-	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20241213214725-57cfbe6fad57 // indirect
