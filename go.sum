@@ -82,10 +82,10 @@ github.com/dylanmei/iso8601 v0.1.0 h1:812NGQDBcqquTfH5Yeo7lwR0nzx/cKdsmf3qMjPURU
 github.com/dylanmei/iso8601 v0.1.0/go.mod h1:w9KhXSgIyROl1DefbMYIE7UVSIvELTbMrCfx+QkYnoQ=
 github.com/dylanmei/winrmtest v0.0.0-20210303004826-fbc9ae56efb6 h1:zWydSUQBJApHwpQ4guHi+mGyQN/8yN6xbKWdDtL3ZNM=
 github.com/dylanmei/winrmtest v0.0.0-20210303004826-fbc9ae56efb6/go.mod h1:6BLLhzn1VEiJ4veuAGhINBTrBlV889Wd+aU4auxKOww=
-github.com/envoyproxy/go-control-plane v0.13.2 h1:HoRou/hxH5VAnylep8UAh0jFAllMY0UlP0TwPmIEgYI=
-github.com/envoyproxy/go-control-plane v0.13.2/go.mod h1:mcYj6+AKxG86c/jKeZsCIWv8oLzhR+SJynG0TB94Xw8=
-github.com/envoyproxy/go-control-plane/envoy v1.32.2 h1:zidqwmijfcbyKqVxjQDFx042PgX+p9U+/fu/f9VtSk8=
-github.com/envoyproxy/go-control-plane/envoy v1.32.2/go.mod h1:eR2SOX2IedqlPvmiKjUH7Wu//S602JKI7HPC/L3SRq8=
+github.com/envoyproxy/go-control-plane v0.13.4 h1:zEqyPVyku6IvWCFwux4x9RxkLOMUL+1vC9xUFv5l2/M=
+github.com/envoyproxy/go-control-plane v0.13.4/go.mod h1:kDfuBlDVsSj2MjrLEtRWtHlsWIFcGyB2RMO44Dc5GZA=
+github.com/envoyproxy/go-control-plane/envoy v1.32.3 h1:hVEaommgvzTjTd4xCaFd+kEQ2iYBtGxP6luyLrx6uOk=
+github.com/envoyproxy/go-control-plane/envoy v1.32.3/go.mod h1:F6hWupPfh75TBXGKA++MCT/CZHFq5r9/uwt/kQYkZfE=
 github.com/envoyproxy/go-control-plane/ratelimit v0.1.0 h1:/G9QYbddjL25KvtKTv3an9lx6VBE2cnb8wp1vEGNYGI=
 github.com/envoyproxy/go-control-plane/ratelimit v0.1.0/go.mod h1:Wk+tMFAFbCXaJPzVVHnPgRKdUdwW/KdbRt94AzgRee4=
 github.com/envoyproxy/protoc-gen-validate v1.1.0 h1:tntQDh69XqOCOZsDz0lVJQez/2L6Uu2PdjCQwWCJ3bM=
