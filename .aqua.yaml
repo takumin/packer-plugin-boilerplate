@@ -18,5 +18,5 @@ packages:
 - name: hashicorp/packer-plugin-sdk/packer-sdc@v0.5.4
 - name: hashicorp/packer@v1.11.2
 - name: takumin/gyaml@v0.0.2
-- name: editorconfig-checker/editorconfig-checker@v3.1.1
+- name: editorconfig-checker/editorconfig-checker@v3.1.2
 - name: go-task/task@v3.40.1
