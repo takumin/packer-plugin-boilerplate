@@ -13,7 +13,7 @@ packages:
 - name: koalaman/shellcheck@v0.10.0
 - name: rhysd/actionlint@v1.7.7
 - name: takumin/gjson@v0.0.3
-- name: aquasecurity/trivy@v0.58.2
+- name: aquasecurity/trivy@v0.60.0
 - name: x-motemen/gobump@v0.2.0
 - name: hashicorp/packer-plugin-sdk/packer-sdc@v0.6.0
 - name: hashicorp/packer@v1.11.2
