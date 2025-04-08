@@ -25,6 +25,7 @@
 		{
 			"matchManagers": ["gomod"],
 			"matchDepTypes": ["indirect"],
+			"prPriority": -1,
 			"enabled": true
 		}
 	]
