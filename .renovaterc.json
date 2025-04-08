@@ -1,27 +1,24 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
-    "github>aquaproj/aqua-renovate-config#2.7.5"
-  ],
-  "timezone": "Asia/Tokyo",
-  "automerge": true,
-  "postUpdateOptions": [
-    "gomodUpdateImportPaths",
-    "gomodTidy"
-  ],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-  "packageRules": [
-    {
-      "matchDatasources": ["golang-version"],
-      "rangeStrategy": "bump"
-    },
-    {
-      "matchManagers": ["gomod"],
-      "matchDepTypes": ["indirect"],
-      "enabled": true
-    }
-  ]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:best-practices",
+		"github>aquaproj/aqua-renovate-config#2.7.5"
+	],
+	"timezone": "Asia/Tokyo",
+	"automerge": true,
+	"postUpdateOptions": ["gomodUpdateImportPaths", "gomodTidy"],
+	"lockFileMaintenance": {
+		"enabled": true
+	},
+	"packageRules": [
+		{
+			"matchDatasources": ["golang-version"],
+			"rangeStrategy": "bump"
+		},
+		{
+			"matchManagers": ["gomod"],
+			"matchDepTypes": ["indirect"],
+			"enabled": true
+		}
+	]
 }
