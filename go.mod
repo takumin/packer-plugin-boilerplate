@@ -7,10 +7,7 @@ require (
 	github.com/hashicorp/packer-plugin-sdk v0.6.1
 )
 
-require (
-	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
-	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
-)
+require github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 
 require (
 	cel.dev/expr v0.22.0 // indirect
@@ -28,6 +25,7 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.49.0 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
+	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/aws/aws-sdk-go v1.55.6 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
